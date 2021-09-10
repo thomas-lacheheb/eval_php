@@ -1,11 +1,17 @@
 <?php
 
 class Category {
+    private $id;
     private $name;
 
-    public function __construct($name)
+    public function __construct()
     {
-        $this->name = $name;
+
+    }
+
+    public function getId() : int
+    {
+        return $this->id;
     }
 
     public function getName()
