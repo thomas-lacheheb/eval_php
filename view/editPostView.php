@@ -18,23 +18,31 @@
                 <a href="index.php?action=addComment&idPost=<?= $post->id ?>"><button type="button" class="btn btn-primary btn-lg px-4 gap-3"">Commenter</button></a>
             </div><br>
 
-            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                <a href="index.php?action=editPostView&id=<?= $post->id ?>&isCommentable=0"><button type="button" class="btn btn-primary btn-lg px-4 gap-3"">Désactiver les commentaires</button></a>
-            </div>
+            <?php if($isCommentable) : ?>
+                <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                    <a href="index.php?action=editPostView&id=<?= $post->id ?>&isCommentable=0"><button type="button" class="btn btn-primary btn-lg px-4 gap-3"">Désactiver les commentaires</button></a>
+                </div>
+            <?php else: ?>
+                <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                    <a href="index.php?action=editPostView&id=<?= $post->id ?>&isCommentable=1"><button type="button" class="btn btn-primary btn-lg px-4 gap-3"">Activer les commentaires</button></a>
+                </div>
+            <?php endif; ?>
 
-            <em>Les commentaires associés a cet article :</em>
-            <?php
-                foreach ($comments as $comment) {
+            <?php if($isCommentable) : ?>
+                <em>Les commentaires associés a cet article :</em>
+                <?php
+                    foreach ($comments as $comment) {
+                    ?>
+                        <div>
+                            <?= $comment->description ?>
+                            <a href="index.php?action=deleteComment&idComment=<?= $comment->id ?>&idPost=<?= $comment->id_article ?>" class="link-danger">
+                                <i class="fas fa-times-circle"></i>
+                            </a>
+                        </div>
+                        <?php
+                    }
                 ?>
-                    <div>
-                        <?= $comment->description ?>
-                        <a href="index.php?action=deleteComment&idComment=<?= $comment->id ?>&idPost=<?= $comment->id_article ?>" class="link-danger">
-                            <i class="fas fa-times-circle"></i>
-                        </a>
-                    </div>
-                    <?php
-                }
-            ?>
+            <?php endif; ?>
         </div>
         
     </div>
