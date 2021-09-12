@@ -26,8 +26,7 @@ class CategoryManager extends Category
             'n' => $name,
         ]);
 
-        $affectedLines = $req->execute();
-        return $affectedLines;
+        return $req->fetchAll(PDO::FETCH_OBJ);
     }
 
 }
