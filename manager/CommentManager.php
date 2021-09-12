@@ -28,7 +28,7 @@ class CommentManager
     }
 
     public static function getComments($id) {
-        $sql = 'SELECT * FROM comment WHERE comment.id_article =' . $id;
+        $sql = 'SELECT * FROM comment WHERE comment.id_post =' . $id;
 
         $db = new Database();
         $co = $db->connexion();
@@ -40,7 +40,7 @@ class CommentManager
 
     public static function addCommentForPost($description, $idPost)
     {
-        $sql = 'INSERT INTO comment (description, id_article) VALUES (:description, :idPost)';
+        $sql = 'INSERT INTO comment (description, id_post) VALUES (:description, :idPost)';
 
         $db = new Database();
         $co = $db->connexion();

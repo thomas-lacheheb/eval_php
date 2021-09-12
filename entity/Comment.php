@@ -4,7 +4,7 @@ class Comment
 {
     private $id;
     private $description;
-    private $id_article;
+    private $id_post;
 
     public function getId() : int
     {
@@ -21,14 +21,14 @@ class Comment
         return $this->description;
     }
 
-    public function setArticleId(int $id) : self
+    public function setPostId(int $id) : self
     {
-        $this->id_article = $id;
+        $this->id_post = $id;
         return $this;
     }
-    public function getArticleId() : int
+    public function getPostId() : int
     {
-        return $this->id_article;
+        return $this->id_post;
     }
 
 }
