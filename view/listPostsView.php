@@ -1,5 +1,3 @@
-<a href="index.php?action=addPost" class="link-primary">Ajouter un article</a>
-
 <?php
 foreach ($posts as $post)
 {
@@ -21,3 +19,5 @@ foreach ($posts as $post)
     <?php
 }
 ?>
+
+<a href="index.php?action=addPost" class="link-primary">Ajouter un article</a>

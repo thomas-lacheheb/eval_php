@@ -16,19 +16,6 @@ class CommentManager
         return $req->fetchAll(PDO::FETCH_OBJ);
     }
 
-    public static function addOne(Category $category) {
-        var_dump($category);
-        die();
-        $sql = 'SELECT * FROM comment';
-
-        $db = new Database();
-        $co = $db->connexion();
-        $req = $co->prepare($sql);
-        $req->execute();
-
-        return $req->fetchAll(PDO::FETCH_OBJ);
-    }
-
     public static function getComment($id) {
         $sql = 'SELECT * FROM comment WHERE comment.id =' . $id;
 
@@ -47,6 +34,35 @@ class CommentManager
         $co = $db->connexion();
         $req = $co->prepare($sql);
         $req->execute();
+
+        return $req->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public static function addCommentForPost($description, $idPost)
+    {
+        $sql = 'INSERT INTO comment (description, id_article) VALUES (:description, :idPost)';
+
+        $db = new Database();
+        $co = $db->connexion();
+        $req = $co->prepare($sql);
+        $req->execute([
+            'description' => $description,
+            'idPost' => $idPost,
+        ]);
+
+        return $req->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public static function deleteComment($idComment)
+    {
+        $sql = 'DELETE FROM comment WHERE id = :idComment';
+
+        $db = new Database();
+        $co = $db->connexion();
+        $req = $co->prepare($sql);
+        $req->execute([
+            'idComment' => $idComment
+        ]);
 
         return $req->fetchAll(PDO::FETCH_OBJ);
     }

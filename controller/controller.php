@@ -5,6 +5,11 @@ require_once('../manager/PostManager.php');
 require_once('../manager/CommentManager.php');
 require_once('../manager/CategoryManager.php');
 
+function viewHomePage()
+{
+    require('../view/homepage.php');
+}
+
 function listPosts()
 {
     $postManager = new PostManager(); // Création d'un objet
@@ -27,11 +32,11 @@ function addPost()
     if ($newPost === false) {
         throw new Exception('Impossible d\'ajouter l\'article !');
     } else {
-        header('Location: index.php?action=listPost');
+        header('Location: index.php?action=listPosts');
     }
 }
 
-function editPostView()
+function editPostView($isCommentable = 1)
 {
     $postManager = new PostManager();
     $commentManager = new CommentManager();
@@ -42,17 +47,36 @@ function editPostView()
     require('../view/editPostView.php');
 }
 
-function addComment($postId, $author, $comment)
+function addCommentView()
+{
+    require('../view/addCommentView.php');
+}
+
+function addComment()
 {
     $commentManager = new CommentManager();
 
-    $affectedLines = $commentManager->postComment($postId, $author, $comment);
+    $affectedLines = $commentManager->addCommentForPost($_POST['description'], $_GET['idPost']);
 
     if ($affectedLines === false) {
         throw new Exception('Impossible d\'ajouter le commentaire !');
     }
     else {
-        header('Location: index.php?action=post&id=' . $postId);
+        header('Location: index.php?action=editPostView&id=' . $_GET['idPost']);
+    }
+}
+
+function deleteComment()
+{
+    $commentManager = new CommentManager();
+
+    $affectedLines = $commentManager->deleteComment($_GET['idComment']);
+
+    if ($affectedLines === false) {
+        throw new Exception('Impossible de supprimer le commentaire !');
+    }
+    else {
+        header('Location: index.php?action=editPostView&id=' . $_GET['idPost']);
     }
 }
 
@@ -68,10 +92,10 @@ function addCategoryView()
     require('../view/addCategoryView.php');
 }
 
-function addCategory($name)
+function addCategory()
 {
     $categoryManager = new categoryManager();
-    $affectedLines = $categoryManager->postCategory($name);
+    $affectedLines = $categoryManager->postCategory($_POST['name']);
 
     if ($affectedLines === false) {
         throw new Exception('Impossible d\'ajouter la categorie !');

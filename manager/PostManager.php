@@ -30,12 +30,6 @@ class PostManager extends Post
     public static function addPost($name, $desc, $category) {
         $sql = 'INSERT INTO article (name, description, categorie_id, created_at) VALUES (:name, :description, :categorie_id, NOW())';
 
-        var_dump($sql);
-        var_dump($name);
-        var_dump($desc);
-        var_dump($category);
-        exit;
-
         $db = new Database();
         $co = $db->connexion();
         $req = $co->prepare($sql);

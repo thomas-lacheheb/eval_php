@@ -23,12 +23,12 @@ class Comment
 
     public function setArticleId(int $id) : self
     {
-        $this->categorie_id = $id;
+        $this->id_article = $id;
         return $this;
     }
     public function getArticleId() : int
     {
-        return $this->categorie_id;
+        return $this->id_article;
     }
 
 }
