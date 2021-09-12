@@ -12,7 +12,26 @@ function listPosts()
     require('../view/listPostsView.php');
 }
 
-function post()
+function addPostView()
+{
+    $categoryManager = new CategoryManager();
+    $categories = $categoryManager->findAll();
+    require('../view/addPostView.php');
+}
+
+function addPost()
+{
+    $postManager = new PostManager();
+    $newPost = $postManager->addPost($_POST['name'], $_POST['description'], $_POST['category']);
+
+    if ($newPost === false) {
+        throw new Exception('Impossible d\'ajouter l\'article !');
+    } else {
+        header('Location: index.php?action=listPost');
+    }
+}
+
+function editPostView()
 {
     $postManager = new PostManager();
     $commentManager = new CommentManager();
@@ -20,9 +39,7 @@ function post()
     $post = $postManager->getPost($_GET['id']);
     $comments = $commentManager->getComments($_GET['id']);
 
-    //var_dump($comments); die();
-
-    require('../view/postView.php');
+    require('../view/editPostView.php');
 }
 
 function addComment($postId, $author, $comment)
@@ -39,6 +56,18 @@ function addComment($postId, $author, $comment)
     }
 }
 
+function listCategories()
+{
+    $categoryManager = new CategoryManager(); // Création d'un objet
+    $categories = $categoryManager->findAll(); // Appel d'une fonction de cet objet
+    require('../view/listCategoriesView.php');
+}
+
+function addCategoryView()
+{
+    require('../view/addCategoryView.php');
+}
+
 function addCategory($name)
 {
     $categoryManager = new categoryManager();
@@ -46,8 +75,7 @@ function addCategory($name)
 
     if ($affectedLines === false) {
         throw new Exception('Impossible d\'ajouter la categorie !');
-    }
-    else {
-        header('Location: index.php');
+    } else {
+        header('Location: index.php?action=listCategory');
     }
 }
