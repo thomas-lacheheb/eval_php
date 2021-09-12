@@ -44,7 +44,6 @@ function editPostView()
     $post = $postManager->getPost($_GET['id']);
     $comments = $commentManager->getComments($_GET['id']);
     $isCommentable = (isset($_GET['isCommentable'])) ? $_GET['isCommentable'] : 1;
-    var_dump($isCommentable);
 
     require('../view/editPostView.php');
 }
